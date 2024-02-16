@@ -51,6 +51,20 @@ if (isset($_SESSION["UTENTE"])) {
                     padding: 10px;
                     margin-right: 10px;
                 }
+                .add-container {
+                    float: right;
+                    margin: 0 auto; /* Imposta il margine automatico per centrare il div */
+                    width: fit-content; /* Imposta la larghezza in base al contenuto */
+                }
+                
+                .add-container label {
+                    font-weight: bold;
+                }
+                
+                .add-container input[type='text'] {
+                    padding: 5px;
+                    margin-left: 20px;
+                }
             </style>
         </head>
         <body>";
@@ -61,6 +75,7 @@ if (isset($_SESSION["UTENTE"])) {
 
     echo "<footer>
         <button onclick='redirectToPage(\"scaffale.php\")'>Visualizza gli Scaffali</button>
+
       </footer><br>";
 
     //connessione per la stampa della tabella principale se la pagina non è ricaricata
@@ -167,6 +182,31 @@ if (isset($_SESSION["UTENTE"])) {
                 
             } catch (PDOException $e) {echo "Connection failed: " . $e->getMessage();}
 
+            echo"<div class='add-container'>
+            <label for='aggiungi'>Aggiungi Oggetto:</label><br><br>
+            <label for='aggiungi'>nome:</label>
+            <input type='text' id='aggiungi' name='aggiungi'><br>
+
+            <label for='aggiungi'>altezza:</label>
+            <input type='text' id='aggiungi' name='aggiungi'><br>
+
+            <label for='aggiungi'>larghezza:</label>
+            <input type='text' id='aggiungi' name='aggiungi'><br>
+
+            <label for='aggiungi'>peso:</label>
+            <input type='text' id='aggiungi' name='aggiungi'><br>
+
+            <label for='aggiungi'>rif. scaffale</label>
+            <input type='text' id='aggiungi' name='aggiungi'><br>
+
+            <label for='aggiungi'>fornitore:</label>
+            <input type='text' id='aggiungi' name='aggiungi'><br>
+
+            <label for='aggiungi'>prezzo:</label>
+            <input type='text' id='aggiungi' name='aggiungi'><br>
+            </div>";
+
+            
 
         } else {
             // Messaggio se la query non ha prodotto risultati

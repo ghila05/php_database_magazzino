@@ -54,7 +54,8 @@ if (isset($_SESSION["UTENTE"])) {
     echo "Benvenuto negli scaffali " . $_SESSION["UTENTE"];
 
     echo "<footer>
-        <button onclick='redirectToPage(\"protetta.php\")'>Visualizza gli oggetti</button>
+        <button onclick='redirectToPage(\"protetta.php\")'>Visualizza gli Oggetti</button>
+
       </footer><br>";
 
     try {
