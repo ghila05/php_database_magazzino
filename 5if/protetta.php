@@ -75,7 +75,6 @@ if (isset($_SESSION["UTENTE"])) {
 
     echo "<footer>
         <button onclick='redirectToPage(\"scaffale.php\")'>Visualizza gli Scaffali</button>
-
       </footer><br>";
 
     //connessione per la stampa della tabella principale se la pagina non è ricaricata
@@ -158,8 +157,7 @@ if (isset($_SESSION["UTENTE"])) {
 
 
             try{  // riempie la select dei venditori 
-                //$user = "nicola";
-                //$passwd = "1234";
+
                 $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 
@@ -182,31 +180,11 @@ if (isset($_SESSION["UTENTE"])) {
                 
             } catch (PDOException $e) {echo "Connection failed: " . $e->getMessage();}
 
-            echo"<div class='add-container'>
-            <label for='aggiungi'>Aggiungi Oggetto:</label><br><br>
-            <label for='aggiungi'>nome:</label>
-            <input type='text' id='aggiungi' name='aggiungi'><br>
 
-            <label for='aggiungi'>altezza:</label>
-            <input type='text' id='aggiungi' name='aggiungi'><br>
+            echo"<button onclick='redirectToPage(\"aggiungi_oggetto.php\")'>Aggiungi oggetto</button><br><br>";
+            echo"<button onclick='redirectToPage(\"elimina_oggetto.php\")'>Elimina oggetto</button><br><br>";
+            echo"<button onclick='redirectToPage(\"aggiungi_oggetto.php\")'>Modifica oggetto</button>";
 
-            <label for='aggiungi'>larghezza:</label>
-            <input type='text' id='aggiungi' name='aggiungi'><br>
-
-            <label for='aggiungi'>peso:</label>
-            <input type='text' id='aggiungi' name='aggiungi'><br>
-
-            <label for='aggiungi'>rif. scaffale</label>
-            <input type='text' id='aggiungi' name='aggiungi'><br>
-
-            <label for='aggiungi'>fornitore:</label>
-            <input type='text' id='aggiungi' name='aggiungi'><br>
-
-            <label for='aggiungi'>prezzo:</label>
-            <input type='text' id='aggiungi' name='aggiungi'><br>
-            </div>";
-
-            
 
         } else {
             // Messaggio se la query non ha prodotto risultati
