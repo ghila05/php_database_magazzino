@@ -2,54 +2,7 @@
 session_start();
 
 if (isset($_SESSION["UTENTE"])) {
-    echo "<html>
-        <head>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    margin: 20px;
-                }
-
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-bottom: 20px;
-                }
-
-                th, td {
-                    border: 1px solid #dddddd;
-                    text-align: left;
-                    padding: 8px;
-                }
-
-                th {
-                    background-color: #f2f2f2;
-                }
-
-                form {
-                    margin-bottom: 20px;
-                }
-
-                footer {
-                    margin-top: 20px;
-                }
-
-                button {
-                    padding: 10px;
-                    cursor: pointer;
-                    background-color: #4CAF50;
-                    color: white;
-                    border: none;
-                    border-radius: 4px;
-                }
-
-                select, button[type='submit'] {
-                    padding: 10px;
-                    margin-right: 10px;
-                }
-            </style>
-        </head>
-        <body>";
+    echo '<link rel="stylesheet" type="text/css" href="style_scaffale.css">';
 
     echo "Benvenuto negli scaffali " . $_SESSION["UTENTE"];
 

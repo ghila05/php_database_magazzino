@@ -6,68 +6,7 @@ require "credenziali.php"; //per tenere le credenziali di connessione al databas
 if (isset($_SESSION["UTENTE"])) {
 
     // css per presentazione più belina
-    echo "<html>
-        <head>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    margin: 20px;
-                }
-
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-bottom: 20px;
-                }
-
-                th, td {
-                    border: 1px solid #dddddd;
-                    text-align: left;
-                    padding: 8px;
-                }
-
-                th {
-                    background-color: #f2f2f2;
-                }
-
-                form {
-                    margin-bottom: 20px;
-                }
-
-                footer {
-                    margin-top: 20px;
-                }
-
-                button {
-                    padding: 10px;
-                    cursor: pointer;
-                    background-color: #4CAF50;
-                    color: white;
-                    border: none;
-                    border-radius: 4px;
-                }
-
-                select, button[type='submit'] {
-                    padding: 10px;
-                    margin-right: 10px;
-                }
-                .add-container {
-                    float: right;
-                    margin: 0 auto; /* Imposta il margine automatico per centrare il div */
-                    width: fit-content; /* Imposta la larghezza in base al contenuto */
-                }
-                
-                .add-container label {
-                    font-weight: bold;
-                }
-                
-                .add-container input[type='text'] {
-                    padding: 5px;
-                    margin-left: 20px;
-                }
-            </style>
-        </head>
-        <body>";
+    echo '<link rel="stylesheet" type="text/css" href="style_protetta.css">';
 
         //fine parte css, messa qui tanto per non creare un file a parte per così poco
 
@@ -183,7 +122,7 @@ if (isset($_SESSION["UTENTE"])) {
 
             echo"<button onclick='redirectToPage(\"aggiungi_oggetto.php\")'>Aggiungi oggetto</button><br><br>";
             echo"<button onclick='redirectToPage(\"elimina_oggetto.php\")'>Elimina oggetto</button><br><br>";
-            echo"<button onclick='redirectToPage(\"aggiungi_oggetto.php\")'>Modifica oggetto</button>";
+            echo"<button onclick='redirectToPage(\"modifica_oggetto.php\")'>Modifica oggetto</button>";
 
 
         } else {
