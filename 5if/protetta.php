@@ -14,6 +14,7 @@ if (isset($_SESSION["UTENTE"])) {
 
     echo "<footer>
         <button onclick='redirectToPage(\"scaffale.php\")'>Visualizza gli Scaffali</button>
+        <button onclick='redirectToPage(\"spedizioni.php\")'>Visualizza le spedizioni</button>
       </footer><br>";
 
     //connessione per la stampa della tabella principale se la pagina non è ricaricata
