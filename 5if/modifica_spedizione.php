@@ -12,7 +12,7 @@ if (isset($_SESSION["UTENTE"])) {
             <h2 style='text-align: center;'>Benvenuto nelle spedizioni, {$_SESSION["UTENTE"]}!</h2>";
 
     echo "<footer>
-            <button onclick='redirectToPage(\"protetta.php\")'>Visualizza le Spedizioni</button>
+            <button onclick='redirectToPage(\"spedizioni.php\")'>Visualizza le Spedizioni</button>
           </footer><br>";
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -25,9 +25,38 @@ if (isset($_SESSION["UTENTE"])) {
                 // Riempire i campi con i dati della spedizione selezionata
                 $shipment_id = $_POST['shipment_id'];
                 $stmt = $conn->prepare("SELECT * FROM spedizioni WHERE id = ?");
-                echo $shipment_id;
                 $stmt->execute([$shipment_id]);
                 $shipment = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                // Genera la sezione HTML per la modifica della spedizione
+                echo "<div class='add-container'>
+                        <h3 style='text-align: center;'>Modifica Spedizione</h3>
+                        <form method='POST'>
+                            <input type='hidden' name='shipment_id' value='{$shipment['id']}'>
+                            <label for='partenza'>Partenza:</label>
+                            <input type='text' name='partenza' value='{$shipment['partenza']}'><br>
+                            <label for='arrivo'>Arrivo:</label>
+                            <input type='text' name='arrivo' value='{$shipment['arrivo']}'><br>
+                            <label for='rif_ogg'>Riferimento Oggetto:</label>
+                            <input type='text' name='rif_ogg' value='{$shipment['rif_ogg']}'><br>
+                            <button type='submit' name='update_shipment'>Aggiorna Spedizione</button>
+                        </form>
+                    </div>";
+            }
+            else{
+                echo "<div class='add-container'>
+                <h3 style='text-align: center;'>Modifica Spedizione</h3>
+                <form method='POST'>
+                    <input type='hidden' name='shipment_id' >
+                    <label for='partenza'>Partenza:</label>
+                    <input type='text' name='partenza'  ><br>
+                    <label for='arrivo'>Arrivo:</label>
+                    <input type='text' name='arrivo'  ><br>
+                    <label for='rif_ogg'>Riferimento Oggetto:</label>
+                    <input type='text' name='rif_ogg' ><br>
+
+                </form>
+            </div>";
             }
 
             if (isset($_POST['update_shipment'])) {
@@ -41,10 +70,10 @@ if (isset($_SESSION["UTENTE"])) {
                 // Preparazione query per l'aggiornamento dei dati
                 $stmt = $conn->prepare("UPDATE spedizioni SET partenza = ?, arrivo = ?, rif_ogg = ? WHERE id = ?");
                 $stmt->execute([$partenza, $arrivo, $rif_ogg, $shipment_id]);
-                
+
+                echo "<div style='text-align: center; color: green;'>Operazione completata con successo!</div>";
             }
 
-            echo "<div style='text-align: center; color: green;'>Operazione completata con successo!</div>";
 
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
@@ -53,7 +82,7 @@ if (isset($_SESSION["UTENTE"])) {
         }
     }
 
-
+    // HTML form per selezionare la spedizione da modificare
     echo "<div class='add-container'>
             <form method='POST'>
                 <label>Seleziona ID della spedizione da modificare:</label>
@@ -81,36 +110,6 @@ if (isset($_SESSION["UTENTE"])) {
                 <button type='submit' name='fill_shipment'>Riempi</button>
             </form>
         </div>";
-    
-    
-    echo "<div class='add-container'>
-            <h3 style='text-align: center;'>Modifica Spedizione</h3>
-            <form method='POST'>";
-
-    if (!empty($shipment['partenza'])) {
-        echo "
-            <input type='hidden' name='shipment_id' value='{$shipment['id']}'>
-            <label for='partenza'>Partenza:</label>
-            <input type='text' name='partenza' value='{$shipment['partenza']}'><br>
-            <label for='arrivo'>Arrivo:</label>
-            <input type='text' name='arrivo' value='{$shipment['arrivo']}'><br>
-            <label for='rif_ogg'>Riferimento Oggetto:</label>
-            <input type='text' name='rif_ogg' value='{$shipment['rif_ogg']}'><br>
-        ";
-    } else {
-        echo "
-            <label for='partenza'>Partenza:</label>
-            <input type='text' name='partenza'><br>
-            <label for='arrivo'>Arrivo:</label>
-            <input type='text' name='arrivo'><br>
-            <label for='rif_ogg'>Riferimento Oggetto:</label>
-            <input type='text' name='rif_ogg'><br>
-        ";
-    }
-
-    echo "<button type='submit' name='update_shipment'>Aggiorna Spedizione</button>
-        </form>
-    </div>";
 
     echo "</div></body>
         </html>";

@@ -8,13 +8,14 @@ if (isset($_SESSION["UTENTE"])) {
     // css per presentazione più belina
     echo '<link rel="stylesheet" type="text/css" href="style_protetta.css">';
 
-        //fine parte css, messa qui tanto per non creare un file a parte per così poco
+       
 
     echo "Benvenuto negli oggetti " . $_SESSION["UTENTE"];
 
     echo "<footer>
         <button onclick='redirectToPage(\"scaffale.php\")'>Visualizza gli Scaffali</button>
         <button onclick='redirectToPage(\"spedizioni.php\")'>Visualizza le spedizioni</button>
+        <button onclick='redirectToPage(\"categorie.php\")'>Visualizza le categorie</button>
       </footer><br>";
 
     //connessione per la stampa della tabella principale se la pagina non è ricaricata
@@ -124,6 +125,7 @@ if (isset($_SESSION["UTENTE"])) {
             echo"<button onclick='redirectToPage(\"aggiungi_oggetto.php\")'>Aggiungi oggetto</button><br><br>";
             echo"<button onclick='redirectToPage(\"elimina_oggetto.php\")'>Elimina oggetto</button><br><br>";
             echo"<button onclick='redirectToPage(\"modifica_oggetto.php\")'>Modifica oggetto</button>";
+            
 
 
         } else {
