@@ -16,13 +16,13 @@ if (isset($_SESSION["UTENTE"])) {
           </footer><br>";
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Connessione al database
+
         try {
             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             if (isset($_POST['delete_shelf'])) {
-                // Prendi l'id dello scaffale da eliminare
+
                 $id_scaffale = $_POST['id_scaffale'];
 
                 // Preparazione e esecuzione della query per eliminare lo scaffale

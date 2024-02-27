@@ -69,9 +69,9 @@ if (isset($_SESSION["UTENTE"])) {
                     </select>
                     <button type='submit'>Filtra</button>
                 </form>";
-                echo"<button onclick='redirectToPage(\"aggiungi_spedizione.php\")'>Aggiungi spedizione</button><br><br>"; // aggiuta spedizione
-                echo"<button onclick='redirectToPage(\"elimina_spedizione.php\")'>Elimina spedizione</button><br><br>"; // elimina spedizione
-                echo"<button onclick='redirectToPage(\"modifica_spedizione.php\")'>Modifica spedizione</button><br><br>"; // modifica spedizione
+                echo"<button onclick='redirectToPage(\"aggiungi_spedizione.php\")'>Aggiungi spedizione</button><br><br>"; 
+                echo"<button onclick='redirectToPage(\"elimina_spedizione.php\")'>Elimina spedizione</button><br><br>"; 
+                echo"<button onclick='redirectToPage(\"modifica_spedizione.php\")'>Modifica spedizione</button><br><br>"; 
         } else {
            
             echo "Nessun risultato trovato";
@@ -79,7 +79,7 @@ if (isset($_SESSION["UTENTE"])) {
     } catch (PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
     } finally {
-      // chiusura connessione
+
         $conn = null;
     }
 

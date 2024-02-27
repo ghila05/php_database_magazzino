@@ -16,7 +16,7 @@ if (isset($_SESSION["UTENTE"])) {
           </footer><br>";
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Connessione al database
+
         try {
             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -43,7 +43,6 @@ if (isset($_SESSION["UTENTE"])) {
                 $fornitore = $_POST['fornitore'];
                 $prezzo = $_POST['prezzo'];
 
-                // Preparazione query per l'aggiornamento dei dati
                 $stmt = $conn->prepare("UPDATE oggetti SET nome = ?, altezza = ?, larghezza = ?, peso = ?, rif_scaffale = ?, Fornitori = ?, Prezzo = ? WHERE id = ?");
                 $stmt->execute([$nome, $altezza, $larghezza, $peso, $rif_scaffale, $fornitore, $prezzo, $oggetto_id]);
                 

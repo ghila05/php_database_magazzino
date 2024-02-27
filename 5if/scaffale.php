@@ -70,6 +70,7 @@ if (isset($_SESSION["UTENTE"])) {
 
                 echo"<button onclick='redirectToPage(\"aggiungi_scaffale.php\")'>Aggiungi scaffale</button><br><br>";
                 echo"<button onclick='redirectToPage(\"elimina_scaffale.php\")'>Elimina scaffale</button><br><br>";
+                echo"<button onclick='redirectToPage(\"modifica_scaffale.php\")'>Modifica scaffale</button><br><br>";
         } else {
             // Messaggio se la query non ha prodotto risultati
             echo "Nessun risultato trovato";

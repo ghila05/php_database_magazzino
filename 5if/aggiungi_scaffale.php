@@ -16,19 +16,19 @@ if (isset($_SESSION["UTENTE"])) {
           </footer><br>";
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Connessione al database
+
         try {
             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             if (isset($_POST['add_shelf'])) {
                 // Prendi i dati dal modulo
-                $nome_scaffale = $_POST['nome_scaffale'];
-                $capacita = $_POST['capacita'];
+                $categoria = $_POST['categoria'];
+
 
                 // Preparazione query per l'inserimento dei dati
-                $stmt = $conn->prepare("INSERT INTO scaffali (nome_scaffale, capacita) VALUES (?, ?)");
-                $stmt->execute([$nome_scaffale, $capacita]);
+                $stmt = $conn->prepare("INSERT INTO scaffali (categoria) VALUES (?)");
+                $stmt->execute([$categoria]);
 
                 echo "<div style='text-align: center; color: green;'>Scaffale aggiunto con successo!</div>";
             }
@@ -44,10 +44,9 @@ if (isset($_SESSION["UTENTE"])) {
     echo "<div class='add-container'>
             <h3 style='text-align: center;'>Aggiungi Scaffale</h3>
             <form method='POST'>
-                <label for='nome_scaffale'>Nome Scaffale:</label>
-                <input type='text' name='nome_scaffale'><br>
-                <label for='capacita'>Capacità:</label>
-                <input type='text' name='capacita'><br>
+                <label for='categoria'>Categoria:</label>
+                <input type='text' name='categoria'><br>
+
                 <button type='submit' name='add_shelf'>Aggiungi Scaffale</button>
             </form>
         </div>";

@@ -36,6 +36,7 @@ if (isset($_SESSION["UTENTE"])) {
 
             echo"<button onclick='redirectToPage(\"aggiungi_categoria.php\")'>Aggiungi categoria</button><br><br>";
             echo"<button onclick='redirectToPage(\"elimina_categoria.php\")'>Elimina categoria</button><br><br>";
+            echo"<button onclick='redirectToPage(\"modifica_categoria.php\")'>Modifica categoria</button><br><br>";
 
 
         } else {

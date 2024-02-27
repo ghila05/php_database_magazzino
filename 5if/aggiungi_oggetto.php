@@ -16,12 +16,12 @@ if (isset($_SESSION["UTENTE"])) {
           </footer><br>";
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Validazione dei dati
+
         if (empty($_POST['nome'])) {
             $errors[] = "Il campo Nome è richiesto";
         }
         if (!is_numeric($_POST['altezza'])) {
-            $errors[] = "Il campo Altezza deve essere un numero";
+            $errors[] = "Il campo Altezza deve essere un numero"; //idea per mostrare errori
         }
         if (!is_numeric($_POST['larghezza'])) {
             $errors[] = "Il campo Larghezza deve essere un numero";
