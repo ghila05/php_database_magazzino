@@ -1,52 +1,58 @@
 <?php
 session_start();
-require "libreria.php"; // per funzioni che verranno eseguite dal server e che possono servire 
-require "credenziali.php"; //per tenere le credenziali di connessione al database
 
+// Inclusione delle librerie necessarie
+require "libreria.php"; // Funzioni eseguite dal server
+require "credenziali.php"; // Credenziali di connessione al database
+
+// Controllo dell'autenticazione dell'utente
 if (isset($_SESSION["UTENTE"])) {
 
-    // css per presentazione più belina
-    echo '<link rel="stylesheet" type="text/css" href="style_protetta.css">';
+    // Inclusione del foglio di stile per la presentazione
+    echo '<!DOCTYPE html>
+            <html lang="it">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Benvenuto</title>
+                <link rel="stylesheet" type="text/css" href="style_scaffale.css">
+            </head>
+            <body>';
 
-       
+    // Messaggio di benvenuto
+    echo "<h1>Benvenuto su questa piattaforma, {$_SESSION["UTENTE"]}!</h1>";
 
-    echo "Benvenuto negli oggetti " . $_SESSION["UTENTE"];
+    // Pulsanti di navigazione
+    echo "
+            <button onclick='redirectToPage(\"scaffale.php\")'>Visualizza gli Scaffali</button>
+            <button onclick='redirectToPage(\"spedizioni.php\")'>Visualizza le Spedizioni</button>
+            <button onclick='redirectToPage(\"categorie.php\")'>Visualizza le Categorie</button>
+          <br><br>";
 
-    echo "<footer>
-        <button onclick='redirectToPage(\"scaffale.php\")'>Visualizza gli Scaffali</button>
-        <button onclick='redirectToPage(\"spedizioni.php\")'>Visualizza le spedizioni</button>
-        <button onclick='redirectToPage(\"categorie.php\")'>Visualizza le categorie</button>
-      </footer><br>";
-
-    //connessione per la stampa della tabella principale se la pagina non è ricaricata
     try {
-        //$user = "nicola";
-        //$passwd = "1234";
+        // Connessione al database
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Controlla se la pagina è stata ricaricata
+        // Controllo se la pagina è stata ricaricata
         if (isset($_POST['ricaricaPagina'])) {
-            
             $_SESSION['ricaricaPagina'] = true;
-            // Ricarica la pagina
+            // Ricaricamento della pagina
             echo "<script>window.location.reload();</script>";
         }
 
-        // Query che stampa tutti gli oggetti (query principale)
+        // Costruzione della query principale per la selezione degli oggetti
         $sql = 'SELECT * FROM oggetti';
 
-
-
-        // Verifica se l'utente ha selezionato un filtro per il prezzo
+        // Controllo dei filtri applicati dall'utente
         if (isset($_POST['my_html_select_box']) && isset($_POST['select_fornitori'])) {
             $filtroPrezzo = $_POST['my_html_select_box'];
             $filtroFornitori = $_POST['select_fornitori'];
         
-            // Aggiungi la condizione WHERE per il filtro dei fornitori
+            // Aggiunta della clausola WHERE per il filtro dei fornitori
             $sql .= " WHERE Fornitori LIKE '%" . $filtroFornitori . "%'";
         
-            // Modifica la query in base alla selezione dell'utente
+            // Modifica della query in base alla selezione dell'utente
             if ($filtroPrezzo === 'Prezzo: Crescente') {
                 $sql .= ' ORDER BY prezzo ASC';
             } elseif ($filtroPrezzo === 'Prezzo: Decrescente') {
@@ -57,7 +63,7 @@ if (isset($_SESSION["UTENTE"])) {
         $statement = $conn->query($sql);
 
         if ($statement->rowCount() > 0) {
-            // Tabella HTML
+            // Tabella HTML per la visualizzazione degli oggetti
             echo "<table>
                     <tr>
                         <th>ID</th>
@@ -70,6 +76,7 @@ if (isset($_SESSION["UTENTE"])) {
                         <th>Prezzo</th>
                     </tr>";
 
+            // Iterazione sui risultati della query
             while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
                 echo "<tr>
                         <td>{$row['id']}</td>
@@ -85,68 +92,54 @@ if (isset($_SESSION["UTENTE"])) {
 
             echo "</table>";
 
-            // Form per il filtro
-            
-            echo"<form method='POST'>";
-            //echo "<form method='POST'>
-             echo"<label for='my_html_select_box'>FILTRA PER PREZZO: </label>    
+            // Form per l'applicazione dei filtri
+            echo "<form method='POST'>
+                    <label for='my_html_select_box'>Filtra per prezzo:</label>    
                     <select name='my_html_select_box'>
                         <option>Prezzo: Crescente</option>
                         <option>Prezzo: Decrescente</option>
                     </select>
-                    <button type='submit'>Filtra</button><br><br>";
+                    <label>Filtra per fornitore:</label>
+                    <select name='select_fornitori'>
+                        <option></option>";
+            // Riempimento della select con i fornitori
+            $queryvenditori = 'SELECT DISTINCT Fornitori FROM oggetti';
+            $statementforn = $conn->prepare($queryvenditori);
+            $statementforn->execute();
+            $fornitori = $statementforn->fetchAll();
+            foreach ($fornitori as $fornitore) {
+                echo "<option>{$fornitore['Fornitori']}</option>";
+            }
+            echo "</select>
+                    <button type='submit'>Filtra</button>
+                  </form>";
 
-
-            try{  // riempie la select dei venditori 
-
-                $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                
-
-
-                $queryvenditori = 'SELECT DISTINCT Fornitori FROM oggetti';
-                $statementforn = $conn->prepare($queryvenditori);
-                $statementforn->execute();
-                $fornitori = $statementforn->fetchAll();
-
-                echo'<label>FILTRA PER FORNITORE: </label>';
-                echo '<select name="select_fornitori">';
-                echo' <option> </option>';
-                foreach ($fornitori as $fornitore) {
-                    echo'  <option>' . $fornitore['Fornitori'] . '</option>';
-                }
-                echo '</select>';
-                
-                echo"</form>"; //fine form filtri fornitori e prezzi
-                
-            } catch (PDOException $e) {echo "Connection failed: " . $e->getMessage();}
-
-
-            echo"<button onclick='redirectToPage(\"aggiungi_oggetto.php\")'>Aggiungi oggetto</button><br><br>";
-            echo"<button onclick='redirectToPage(\"elimina_oggetto.php\")'>Elimina oggetto</button><br><br>";
-            echo"<button onclick='redirectToPage(\"modifica_oggetto.php\")'>Modifica oggetto</button>";
-            
-
+            // Pulsanti per aggiungere, eliminare e modificare oggetti
+            echo "<button onclick='redirectToPage(\"aggiungi_oggetto.php\")'>Aggiungi oggetto</button><br><br>";
+            echo "<button onclick='redirectToPage(\"elimina_oggetto.php\")'>Elimina oggetto</button><br><br>";
+            echo "<button onclick='redirectToPage(\"modifica_oggetto.php\")'>Modifica oggetto</button>";
 
         } else {
-            // Messaggio se la query non ha prodotto risultati
+            // Messaggio se la query non produce risultati
             echo "Nessun risultato trovato";
         }
     } catch (PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
+        echo "Errore di connessione al database: " . $e->getMessage();
     } finally {
-        // Chiudi la connessione in ogni caso
+        // Chiusura della connessione
         $conn = null;
     }
 
     echo "</body>
         </html>";
 } else {
+    // Messaggio se l'accesso non è consentito
     echo "Accesso non consentito";
 }
 ?>
 
 <script>
+    // Funzione per il reindirizzamento alle pagine
     function redirectToPage(page) {
         window.location.href = page;
     }

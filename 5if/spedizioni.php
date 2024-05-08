@@ -1,6 +1,7 @@
 <?php
 session_start();
-
+require "libreria.php"; // Funzioni eseguite dal server
+require "credenziali.php"; // Credenziali di connessione al database
 if (isset($_SESSION["UTENTE"])) {
     echo '<link rel="stylesheet" type="text/css" href="style_scaffale.css">';
 
@@ -12,7 +13,7 @@ if (isset($_SESSION["UTENTE"])) {
       </footer><br>";
 
     try {
-        $conn = new PDO("mysql:host=localhost;dbname=magazzino", "nicola", "1234");
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
        

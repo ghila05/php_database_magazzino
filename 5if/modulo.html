@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
+    <title>Gestione Magazzino</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif ;
+            font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
@@ -14,6 +14,12 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-direction: column; /* Aggiunto per centrare verticalmente */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px; /* Aggiunto spazio sotto il titolo */
         }
 
         form {
@@ -54,6 +60,7 @@
     </style>
 </head>
 <body>
+    <h1>Gestione Magazzino</h1> <!-- Titolo centrale -->
     <form action="pagina.php" method="POST">
         <label for="utente">Utente:</label>
         <input type="text" id="utente" name="utente" required>
@@ -63,7 +70,7 @@
         
         <input type="submit" value="Accedi">
         <input type="button" value="Registrati" onclick="location.href='registrazione.html';">
+        <h6>Github: ghila05</h6>
     </form>
-
 </body>
 </html>
